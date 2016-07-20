@@ -74,6 +74,7 @@ TXT;
         $metadata = $result->get('@metadata');
 
         $this->assertTrue(isset($metadata['statusCode']) && $metadata['statusCode'] == 200);
+        $this->assertEquals('AES256', $result->get('ServerSideEncryption'));
     }
 
     public function testUploadString()
@@ -95,5 +96,6 @@ TXT;
         $metadata = $result->get('@metadata');
 
         $this->assertTrue(isset($metadata['statusCode']) && $metadata['statusCode'] == 200);
+        $this->assertEquals('AES256', $result->get('ServerSideEncryption'));
     }
 }
