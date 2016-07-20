@@ -18,7 +18,7 @@ UPLOADER_S3_BUCKET=your_s3_bucket
 Start container:
 
 ```console
-docker-composer run --rm php-56
+docker-compose run --rm php-56
 ```
 
 ### Tests
@@ -34,7 +34,7 @@ In running container:
 From outside:
 
 ```console
-docker-composer run --rm php-56 ./tests.sh
+docker-compose run --rm php-56 ./tests.sh
 ```
 
 ## License
