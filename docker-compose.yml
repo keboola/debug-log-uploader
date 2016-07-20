@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+
+  php56:
+    build:
+      context: .
+      dockerfile: ./docker/php56/Dockerfile
+    tty: true
+    stdin_open: true
+    command: bash
+    environment:
+      - UPLOADER_AWS_KEY
+      - UPLOADER_AWS_SECRET
+      - UPLOADER_AWS_REGION
+      - UPLOADER_S3_BUCKET
+    volumes:
+      - ./:/code
+      - ./docker/php56/php.ini:/usr/local/etc/php/php.ini
