@@ -6,7 +6,7 @@
     "require": {
         "php": ">=5.6",
         "aws/aws-sdk-php": "~3.18",
-        "symfony/filesystem": "~3.0"
+        "symfony/filesystem": "~2.3"
     },
     "autoload": {
         "psr-4": {
