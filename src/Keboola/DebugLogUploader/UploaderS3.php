@@ -59,6 +59,7 @@ class UploaderS3 implements UploaderInterface
             'Key' => (empty($prefix) ? '' : (trim($prefix, '/') . '/')) . $s3FileName,
             'ContentType' => $contentType,
             'ACL' => 'private',
+            'ServerSideEncryption' => 'AES256',
             'SourceFile' => $filePath,
         ]);
 
@@ -82,6 +83,7 @@ class UploaderS3 implements UploaderInterface
             'Key' => (empty($prefix) ? '' : (trim($prefix, '/') . '/')) . $s3FileName,
             'ContentType' => $contentType,
             'ACL' => 'private',
+            'ServerSideEncryption' => 'AES256',
             'Body' => $content,
         ]);
 
