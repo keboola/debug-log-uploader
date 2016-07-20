@@ -1,0 +1,79 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Resources": {
+    "DebugLogUploaderS3": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+      }
+    },
+    "User": {
+      "Type": "AWS::IAM::User",
+      "Properties": {
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "S3Access",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:*"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:aws:s3:::",
+                          {
+                            "Ref": "DebugLogUploaderS3"
+                          },
+                          "/*"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "AccessKey": {
+      "Type": "AWS::IAM::AccessKey",
+      "Properties": {
+        "UserName": {
+          "Ref": "User"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "DebugLogUploaderS3": {
+      "Value": {
+        "Ref": "DebugLogUploaderS3"
+      }
+    },
+    "AccessKeyId": {
+      "Value": {
+        "Ref": "AccessKey"
+      }
+    },
+    "AccessKeySecret": {
+      "Value": {
+        "Fn::GetAtt": [
+          "AccessKey",
+          "SecretAccessKey"
+        ]
+      }
+    }
+  }
+}
