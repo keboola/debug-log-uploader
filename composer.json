@@ -1,6 +1,7 @@
 {
     "name": "keboola/debug-log-uploader",
-    "type": "project",
+    "license": "MIT",
+    "type": "library",
     "description": "Keboola Debug Log Uploader",
     "keywords": ["keboola", "debug", "log", "uploader", "file", "s3"],
     "require": {
