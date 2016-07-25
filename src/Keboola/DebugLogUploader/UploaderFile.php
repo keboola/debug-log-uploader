@@ -40,16 +40,6 @@ class UploaderFile implements UploaderInterface
     {
         $fileName = $this->path . '/' . $this->getFilePathAndUniquePrefix() . $name;
 
-        if ($contentType === 'application/json') {
-            $decoded = json_decode($content);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                $content = json_encode(
-                    $decoded,
-                    JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
-                );
-            }
-        }
-
         (new Filesystem)->dumpFile($fileName, $content);
 
         return $fileName;
