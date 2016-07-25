@@ -41,10 +41,13 @@ class UploaderFile implements UploaderInterface
         $fileName = $this->path . '/' . $this->getFilePathAndUniquePrefix() . $name;
 
         if ($contentType === 'application/json') {
-            $content = json_encode(
-                json_decode($content),
-                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
-            );
+            $decoded = json_decode($content);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $content = json_encode(
+                    $decoded,
+                    JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+                );
+            }
         }
 
         (new Filesystem)->dumpFile($fileName, $content);

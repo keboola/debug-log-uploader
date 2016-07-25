@@ -90,4 +90,16 @@ JSON;
 
         $this->assertEquals($contentJsonFormatted, file_get_contents($destinationFile));
     }
+
+    public function testUploadStringJsonInvalid()
+    {
+        $contentJson = <<<JSON
+{"key": value}
+JSON;
+        $name = 'file-uploader-string-json-invalid.json';
+
+        $destinationFile = $this->uploader->uploadString($name, $contentJson, 'application/json');
+
+        $this->assertEquals($contentJson, file_get_contents($destinationFile));
+    }
 }
