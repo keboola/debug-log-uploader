@@ -1,6 +1,7 @@
 # Debug Log Uploader
 
 [![Build Status](https://travis-ci.org/keboola/debug-log-uploader.svg?branch=master)](https://travis-ci.org/keboola/debug-log-uploader)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/keboola/debug-log-uploader/blob/master/LICENSE.md)
 
 Simple package for uploading logs to S3 or local filesystem.
 
@@ -15,10 +16,10 @@ UPLOADER_AWS_REGION=your_region
 UPLOADER_S3_BUCKET=your_s3_bucket
 ```
 
-Start container:
+Start container, install dependencies:
 
 ```console
-docker-compose run --rm php56
+docker-compose run --rm php56 sh -c 'composer install && bash'
 ```
 
 ### Tests
@@ -34,7 +35,7 @@ In running container:
 From outside:
 
 ```console
-docker-compose run --rm php56 ./tests.sh
+docker-compose run --rm php56 sh -c 'composer install && ./tests.sh'
 ```
 
 ## License
