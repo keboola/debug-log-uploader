@@ -3,6 +3,7 @@
 namespace Keboola\DebugLogUploader;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Zend\Json\Json;
 
 class UploaderFile implements UploaderInterface
 {
@@ -39,6 +40,10 @@ class UploaderFile implements UploaderInterface
     public function uploadString($name, $content, $contentType = 'text/plain')
     {
         $fileName = $this->path . '/' . $this->getFilePathAndUniquePrefix() . $name;
+
+        if ($contentType === 'application/json') {
+            $content = Json::prettyPrint($content);
+        }
 
         (new Filesystem)->dumpFile($fileName, $content);
 

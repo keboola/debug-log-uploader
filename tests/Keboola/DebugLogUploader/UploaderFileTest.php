@@ -57,8 +57,6 @@ TXT;
 
     public function testUploadStringJson()
     {
-        $this->markTestSkipped('json pretty print');
-
         $contentJsonOriginal = <<<JSON
 \n{"require":{"php":"~5.6","aws/aws-sdk-php":"~3.18",\n"symfony/filesystem":"~3.0"
 },"autoload":{"psr-4":{"Keboola\\\\":"src/Keboola/"}},"require-dev":{
