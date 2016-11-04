@@ -5,9 +5,9 @@
     "description": "Keboola Debug Log Uploader",
     "keywords": ["keboola", "debug", "log", "uploader", "file", "s3"],
     "require": {
-        "php": ">=5.6",
-        "aws/aws-sdk-php": "~3.18",
-        "symfony/filesystem": "~3.0",
+        "php": "~5.6|~7.0",
+        "aws/aws-sdk-php": "~3.0",
+        "symfony/filesystem": "~2.3|~3.0",
         "zendframework/zend-json": "~3.0"
     },
     "autoload": {
