@@ -27,10 +27,7 @@ class UploaderS3 implements UploaderInterface
         }
 
         $this->s3path = $config['s3-upload-path'];
-
-        $this->urlPrefix = isset($config['url-prefix'])
-            ? $config['url-prefix']
-            : 'https://connection.keboola.com/admin/utils/logs?file=';
+        $this->urlPrefix = isset($config['url-prefix']) ? $config['url-prefix'] : '';
 
         $this->s3client = new S3Client([
             'version' => '2006-03-01',
