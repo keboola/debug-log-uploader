@@ -21,13 +21,14 @@ class UploaderS3 implements UploaderInterface
             $config['aws-access-key'],
             $config['aws-secret-key'],
             $config['aws-region'],
-            $config['s3-upload-path']
+            $config['s3-upload-path'],
+            $config['url-prefix']
         )) {
             throw new \Exception('Please set all required config parameters.');
         }
 
         $this->s3path = $config['s3-upload-path'];
-        $this->urlPrefix = isset($config['url-prefix']) ? $config['url-prefix'] : '';
+        $this->urlPrefix = $config['url-prefix'];
 
         $this->s3client = new S3Client([
             'version' => '2006-03-01',

@@ -27,6 +27,7 @@ class UploaderS3Test extends \PHPUnit_Framework_TestCase
             'aws-secret-key' => UPLOADER_AWS_SECRET,
             'aws-region' => UPLOADER_AWS_REGION,
             's3-upload-path' => UPLOADER_S3_BUCKET . '/tests/x/',
+            'url-prefix' => '',
         ]);
 
         parent::setUp();
