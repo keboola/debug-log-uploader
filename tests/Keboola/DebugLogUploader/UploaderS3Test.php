@@ -36,7 +36,10 @@ class UploaderS3Test extends \PHPUnit_Framework_TestCase
     public function testMissingS3clientParams()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Please set all required config parameters.');
+        $this->expectExceptionMessage(
+            'Please set all required config parameters.'
+            . ' Missing: aws-access-key, aws-secret-key, aws-region, s3-upload-path, url-prefix'
+        );
 
         new UploaderS3([], 'path', '');
     }
