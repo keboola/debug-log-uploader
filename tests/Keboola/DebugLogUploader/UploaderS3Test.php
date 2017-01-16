@@ -41,7 +41,7 @@ class UploaderS3Test extends \PHPUnit_Framework_TestCase
             . ' Missing: aws-access-key, aws-secret-key, aws-region, s3-upload-path, url-prefix'
         );
 
-        new UploaderS3([], 'path', '');
+        new UploaderS3([]);
     }
 
     private function getS3client()
