@@ -17,14 +17,15 @@ class UploaderS3 implements UploaderInterface
 
     public function __construct(array $config)
     {
-        if (!isset(
-            $config['aws-access-key'],
-            $config['aws-secret-key'],
-            $config['aws-region'],
-            $config['s3-upload-path'],
-            $config['url-prefix']
-        )) {
-            throw new \Exception('Please set all required config parameters.');
+        $errors = [];
+        foreach (['aws-access-key', 'aws-secret-key', 'aws-region', 's3-upload-path', 'url-prefix'] as $parameter) {
+            if (!isset($config[$parameter])) {
+                $errors[] = $parameter;
+            }
+        }
+
+        if (!empty($errors)) {
+            throw new \Exception('Please set all required config parameters. Missing: ' . implode(', ', $errors));
         }
 
         $this->s3path = $config['s3-upload-path'];
