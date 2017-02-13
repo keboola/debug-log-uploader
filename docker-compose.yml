@@ -2,10 +2,10 @@ version: '2'
 
 services:
 
-  php56:
+  php:
     build:
       context: .
-      dockerfile: ./docker/php56/Dockerfile
+      dockerfile: ./docker/php/Dockerfile
     tty: true
     stdin_open: true
     command: bash
@@ -16,4 +16,4 @@ services:
       - UPLOADER_S3_BUCKET
     volumes:
       - ./:/code
-      - ./docker/php56/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini

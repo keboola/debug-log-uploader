@@ -21,7 +21,7 @@ UPLOADER_S3_BUCKET=your_s3_bucket
 Start container, install dependencies:
 
 ```console
-docker-compose run --rm php56 sh -c 'composer install && bash'
+docker-compose run --rm php sh -c 'composer install && bash'
 ```
 
 ### Tests
@@ -37,7 +37,7 @@ In running container:
 From outside:
 
 ```console
-docker-compose run --rm php56 sh -c 'composer install && ./tests.sh'
+docker-compose run --rm php sh -c 'composer install && ./tests.sh'
 ```
 
 ## License
