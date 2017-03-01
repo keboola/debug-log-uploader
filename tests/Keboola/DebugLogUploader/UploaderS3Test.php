@@ -22,13 +22,13 @@ class UploaderS3Test extends \PHPUnit_Framework_TestCase
         $this->fs->remove($this->sourcePath);
         $this->fs->mkdir($this->sourcePath);
         
-        $this->uploader = new UploaderS3([
-            'aws-access-key' => UPLOADER_AWS_KEY,
-            'aws-secret-key' => UPLOADER_AWS_SECRET,
-            'aws-region' => UPLOADER_AWS_REGION,
-            's3-upload-path' => UPLOADER_S3_BUCKET . '/tests/x/',
-            'url-prefix' => '',
-        ]);
+        $this->uploader = new UploaderS3(
+            $this->getS3client(),
+            [
+                's3-upload-path' => UPLOADER_S3_BUCKET . '/tests/x/',
+                'url-prefix' => '',
+            ]
+        );
 
         parent::setUp();
     }
@@ -38,10 +38,10 @@ class UploaderS3Test extends \PHPUnit_Framework_TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage(
             'Please set all required config parameters.'
-            . ' Missing: aws-access-key, aws-secret-key, aws-region, s3-upload-path, url-prefix'
+            . ' Missing: s3-upload-path, url-prefix'
         );
 
-        new UploaderS3([]);
+        new UploaderS3($this->getS3client(), []);
     }
 
     private function getS3client()

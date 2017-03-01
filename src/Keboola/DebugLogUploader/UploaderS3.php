@@ -15,10 +15,10 @@ class UploaderS3 implements UploaderInterface
     /** @var S3Client */
     private $s3client;
 
-    public function __construct(array $config)
+    public function __construct(S3Client $s3Client, array $config)
     {
         $errors = [];
-        foreach (['aws-access-key', 'aws-secret-key', 'aws-region', 's3-upload-path', 'url-prefix'] as $parameter) {
+        foreach (['s3-upload-path', 'url-prefix'] as $parameter) {
             if (!isset($config[$parameter])) {
                 $errors[] = $parameter;
             }
@@ -31,15 +31,7 @@ class UploaderS3 implements UploaderInterface
         $this->s3path = $config['s3-upload-path'];
         $this->urlPrefix = $config['url-prefix'];
 
-        $this->s3client = new S3Client([
-            'version' => '2006-03-01',
-            'region' => $config['aws-region'],
-            'retries' => 40,
-            'credentials' => [
-                'key' => $config['aws-access-key'],
-                'secret' => $config['aws-secret-key']
-            ]
-        ]);
+        $this->s3client = $s3Client;
     }
 
     /**
