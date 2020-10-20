@@ -5,10 +5,10 @@
     "description": "Keboola Debug Log Uploader",
     "keywords": ["keboola", "debug", "log", "uploader", "file", "s3"],
     "require": {
-        "php": "~5.6|~7.0",
+        "php": "^7.1",
+        "ext-json": "*",
         "aws/aws-sdk-php": "~3.0",
-        "symfony/filesystem": "~2.3|~3.0|^4.0",
-        "zendframework/zend-json": "~3.0"
+        "symfony/filesystem": "^4.0|^5.0"
     },
     "autoload": {
         "psr-4": {
@@ -16,8 +16,23 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.3",
-        "squizlabs/php_codesniffer": "~2.6",
-        "codeclimate/php-test-reporter": "~0.3"
+        "phpunit/phpunit": "^7.0",
+        "keboola/coding-standard": "^7.0",
+        "codeclimate/php-test-reporter": "~0.3",
+        "phpstan/phpstan": "^0.12.50",
+        "phpstan/phpstan-phpunit": "^0.12.16",
+        "zendframework/zend-json": "^3.0"
+    },
+    "scripts": {
+        "tests": "phpunit",
+        "phpcs": "phpcs -s -n --extensions=php src",
+        "phpcbf": "phpcbf -s -n --extensions=php src",
+        "phpstan": "phpstan analyse ./src ./tests --level=max --no-progress -c phpstan.neon",
+        "ci": [
+            "@composer validate --no-check-publish --no-check-all",
+            "@phpcs",
+            "@phpstan",
+            "@tests"
+        ]
     }
 }

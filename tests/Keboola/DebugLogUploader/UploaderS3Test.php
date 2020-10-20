@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Keboola\DebugLogUploader;
 
 use Aws\S3\S3Client;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class UploaderS3Test extends \PHPUnit_Framework_TestCase
+class UploaderS3Test extends TestCase
 {
     /** @var Filesystem */
     private $fs;
@@ -15,48 +18,32 @@ class UploaderS3Test extends \PHPUnit_Framework_TestCase
 
     /** @var string */
     private $sourcePath = '/tmp/uploader-s3-test-source';
-    
-    protected function setUp()
+
+    protected function setUp(): void
     {
         $this->fs = new Filesystem;
         $this->fs->remove($this->sourcePath);
         $this->fs->mkdir($this->sourcePath);
-        
+
         $this->uploader = new UploaderS3(
             $this->getS3client(),
-            [
-                's3-upload-path' => UPLOADER_S3_BUCKET . '/tests/x/',
-                'url-prefix' => '',
-            ]
+            '',
+            getenv('S3_LOGS_BUCKET') . '/tests/x/'
         );
 
         parent::setUp();
     }
 
-    public function testMissingS3clientParams()
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage(
-            'Please set all required config parameters.'
-            . ' Missing: s3-upload-path, url-prefix'
-        );
-
-        new UploaderS3($this->getS3client(), []);
-    }
-
-    private function getS3client()
+    private function getS3client(): S3Client
     {
         return new S3Client([
-            'region' => UPLOADER_AWS_REGION,
-            'credentials' => [
-                'key' => UPLOADER_AWS_KEY,
-                'secret' => UPLOADER_AWS_SECRET,
-            ],
             'version' => '2006-03-01',
+            'retries' => 20,
+            'region' => getenv('AWS_DEFAULT_REGION'),
         ]);
     }
 
-    public function testUploadFile()
+    public function testUploadFile(): void
     {
         $fileContent = <<<TXT
 S3 uploader upload file
@@ -70,7 +57,7 @@ TXT;
         $client = $this->getS3client();
 
         $result = $client->getObject([
-            'Bucket' => UPLOADER_S3_BUCKET,
+            'Bucket' => getenv('S3_LOGS_BUCKET'),
             'Key' => 'tests/x/' . $destinationFile,
         ]);
 
@@ -80,7 +67,7 @@ TXT;
         $this->assertEquals('AES256', $result->get('ServerSideEncryption'));
     }
 
-    public function testUploadString()
+    public function testUploadString(): void
     {
         $fileContent = <<<TXT
 S3 uploader upload string
@@ -92,7 +79,7 @@ TXT;
         $client = $this->getS3client();
 
         $result = $client->getObject([
-            'Bucket' => UPLOADER_S3_BUCKET,
+            'Bucket' => getenv('S3_LOGS_BUCKET'),
             'Key' => 'tests/x/' . $destinationFile,
         ]);
 

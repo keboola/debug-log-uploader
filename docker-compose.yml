@@ -2,7 +2,7 @@ version: '2'
 
 services:
 
-  php:
+  dev:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
@@ -10,10 +10,10 @@ services:
     stdin_open: true
     command: bash
     environment:
-      - UPLOADER_AWS_KEY
-      - UPLOADER_AWS_SECRET
-      - UPLOADER_AWS_REGION
-      - UPLOADER_S3_BUCKET
+        - AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY
+        - AWS_DEFAULT_REGION
+        - S3_LOGS_BUCKET
     volumes:
       - ./:/code
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini

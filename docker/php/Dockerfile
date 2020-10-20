@@ -1,4 +1,4 @@
-FROM php:5.6
+FROM php:7.1
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -q \
@@ -7,5 +7,7 @@ RUN apt-get update -q \
 
 RUN curl -sS https://getcomposer.org/installer | php \
   && mv composer.phar /usr/local/bin/composer
+
+RUN pecl install xdebug-2.9.8 && docker-php-ext-enable xdebug
 
 WORKDIR /code

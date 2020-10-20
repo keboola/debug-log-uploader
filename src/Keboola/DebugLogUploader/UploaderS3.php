@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Keboola\DebugLogUploader;
 
 use Aws\S3\S3Client;
 
-class UploaderS3 implements UploaderInterface
+class UploaderS3 extends AbstractUploader
 {
     /** @var string */
     private $urlPrefix;
@@ -15,35 +17,25 @@ class UploaderS3 implements UploaderInterface
     /** @var S3Client */
     private $s3client;
 
-    public function __construct(S3Client $s3Client, array $config)
-    {
-        $errors = [];
-        foreach (['s3-upload-path', 'url-prefix'] as $parameter) {
-            if (!isset($config[$parameter])) {
-                $errors[] = $parameter;
-            }
-        }
-
-        if (!empty($errors)) {
-            throw new \Exception('Please set all required config parameters. Missing: ' . implode(', ', $errors));
-        }
-
-        $this->s3path = $config['s3-upload-path'];
-        $this->urlPrefix = $config['url-prefix'];
-
+    public function __construct(
+        S3Client $s3Client,
+        string $urlPrefix,
+        string $s3path
+    ) {
+        $this->s3path = $s3path;
+        $this->urlPrefix = $urlPrefix;
         $this->s3client = $s3Client;
     }
 
     /**
      * Uploads file to s3
-     * @param $filePath
-     * @param string $contentType
-     * @return string
      */
-    public function upload($filePath, $contentType = 'text/plain')
-    {
+    public function upload(
+        string $filePath,
+        string $contentType = 'text/plain'
+    ): string {
         $s3FileName = $this->getFilePathAndUniquePrefix() . basename($filePath);
-        list($bucket, $prefix) = explode('/', $this->s3path, 2);
+        [$bucket, $prefix] = explode('/', $this->s3path, 2);
 
         $this->s3client->putObject([
             'Bucket' => $bucket,
@@ -58,16 +50,23 @@ class UploaderS3 implements UploaderInterface
     }
 
     /**
-     * Uploads string as file to s3
-     * @param $name
-     * @param $content
-     * @param string $contentType
-     * @return string
+     * Prepends URL prefix to file name
      */
-    public function uploadString($name, $content, $contentType = 'text/plain')
+    private function withUrlPrefix(string $logFileName): string
     {
+        return $this->urlPrefix . $logFileName;
+    }
+
+    /**
+     * Uploads string as file to s3
+     */
+    public function uploadString(
+        string $name,
+        string $content,
+        string $contentType = 'text/plain'
+    ): string {
         $s3FileName = $this->getFilePathAndUniquePrefix() . $name;
-        list($bucket, $prefix) = explode('/', $this->s3path, 2);
+        [$bucket, $prefix] = explode('/', $this->s3path, 2);
 
         $this->s3client->putObject([
             'Bucket' => $bucket,
@@ -79,24 +78,5 @@ class UploaderS3 implements UploaderInterface
         ]);
 
         return $this->withUrlPrefix($s3FileName);
-    }
-
-    /**
-     * Gets file path and its prefix
-     * @return string
-     */
-    public function getFilePathAndUniquePrefix()
-    {
-        return date('Y/m/d/H/') . date('Y-m-d-H-i-s') . '-' . uniqid() . '-';
-    }
-
-    /**
-     * Prepends URL prefix to file name
-     * @param $logFileName string
-     * @return string
-     */
-    private function withUrlPrefix($logFileName)
-    {
-        return $this->urlPrefix . $logFileName;
     }
 }

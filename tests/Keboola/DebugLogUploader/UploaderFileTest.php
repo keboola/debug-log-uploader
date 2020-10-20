@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Keboola\DebugLogUploader;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class UploaderFileTest extends \PHPUnit_Framework_TestCase
+class UploaderFileTest extends TestCase
 {
     /** @var Filesystem */
     private $fs;
@@ -18,18 +21,18 @@ class UploaderFileTest extends \PHPUnit_Framework_TestCase
     /** @var string */
     private $destinationPath = '/tmp/uploader-file-test-dest';
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->fs = new Filesystem;
         $this->fs->remove([$this->sourcePath, $this->destinationPath]);
         $this->fs->mkdir([$this->sourcePath, $this->destinationPath]);
-        
+
         $this->uploader = new UploaderFile($this->destinationPath);
 
         parent::setUp();
     }
 
-    public function testUploadFile()
+    public function testUploadFile():void
     {
         $fileContent = <<<TXT
 File uploader upload file
@@ -43,7 +46,7 @@ TXT;
         $this->assertEquals($fileContent, file_get_contents($destinationFile));
     }
 
-    public function testUploadStringPlain()
+    public function testUploadStringPlain():void
     {
         $contentTxt = <<<TXT
 File uploader upload string - plain
@@ -55,7 +58,7 @@ TXT;
         $this->assertEquals($contentTxt, file_get_contents($destinationFile));
     }
 
-    public function testUploadStringJson()
+    public function testUploadStringJson():void
     {
         $contentJsonOriginal = <<<JSON
 \n{"require":{"php":"~5.6","aws/aws-sdk-php":"~3.18",\n"symfony/filesystem":"~3.0"
