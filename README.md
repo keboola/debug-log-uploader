@@ -5,11 +5,12 @@
 [![Total Downloads](https://poser.pugx.org/keboola/debug-log-uploader/downloads)](https://packagist.org/packages/keboola/debug-log-uploader)
 [![License](https://poser.pugx.org/keboola/debug-log-uploader/license)](https://github.com/keboola/debug-log-uploader/blob/master/LICENSE.md)
 
-Simple package for uploading logs to S3 or local filesystem.
+Simple package for uploading logs to AWS S3, Azure Blob Storage or local filesystem.
 
 ## Development
 
 ### Create Azure resources
+
 Use the provided `azure-services.json` to create ARM stack:
 
 ```
