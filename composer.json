@@ -9,7 +9,7 @@
         "aws/aws-sdk-php": "~3.0",
         "symfony/filesystem": "~2.3|~3.0|^4.0",
         "zendframework/zend-json": "~3.0",
-        "microsoft/azure-storage-blob": "^1.5"
+        "microsoft/azure-storage-blob": "~1.5"
     },
     "autoload": {
         "psr-4": {
