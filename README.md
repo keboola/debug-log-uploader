@@ -9,6 +9,23 @@ Simple package for uploading logs to S3 or local filesystem.
 
 ## Development
 
+### Create Azure resources
+Use the provided `azure-services.json` to create ARM stack:
+
+```
+export RESOURCE_GROUP=testing-debug-log-uploader
+az group create --name $RESOURCE_GROUP --location "East US"
+az deployment group create \
+    --resource-group $RESOURCE_GROUP \
+    --name debug-log-uploader \
+    --template-file ./azure-services.json \
+    --query "properties.outputs"
+
+```
+Go to the Azure Portal - Storage Account - Access Keys and copy connection string.
+
+### Create .env file
+
 Create `.env` file (from `.env.dist`) with your environment variables:
 
 ```
