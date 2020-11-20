@@ -4,9 +4,14 @@ namespace Keboola\DebugLogUploader;
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CommitBlobBlocksOptions;
+use MicrosoftAzure\Storage\Blob\Models\Block;
 
 class UploaderAbs implements UploaderInterface
 {
+    const PAD_LENGTH = 5;
+    const CHUNK_SIZE = 4 * 1024 * 1024;
+
     /** @var string */
     private $urlPrefix;
 
@@ -47,8 +52,31 @@ class UploaderAbs implements UploaderInterface
      */
     public function upload($filePath, $contentType = 'text/plain')
     {
-        // TODO
-        return '';
+        $fileName = trim($this->uploadPath, '/') . '/' .  $this->getFilePathAndUniquePrefix() . basename($filePath);
+
+        $handle = fopen($filePath, 'rb');
+        $counter = 1;
+        $blockIds = [];
+
+        while (!feof($handle)) {
+            $blockId = base64_encode(str_pad($counter, self::PAD_LENGTH, '0', STR_PAD_LEFT));
+            $block = new Block();
+            $block->setBlockId($blockId);
+            $block->setType('Uncommitted');
+            $blockIds[] = $block;
+            $data = fread($handle, self::CHUNK_SIZE);
+            // Upload the block.
+            $this->absClient->createBlobBlock($this->container, $fileName, $blockId, $data);
+            $counter++;
+        }
+        fclose($handle);
+
+        $options = new CommitBlobBlocksOptions();
+        $options->setContentType($contentType);
+
+        $this->absClient->commitBlobBlocks($this->container, $fileName, $blockIds, $options);
+
+        return $this->withUrlPrefix($fileName);
     }
 
     /**

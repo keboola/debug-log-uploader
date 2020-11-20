@@ -65,4 +65,22 @@ TXT;
         $this->assertEquals('ABS uploader upload string', fread($blob->getContentStream(), 1000));
         $this->assertEquals('text/plain', $blob->getProperties()->getContentType());
     }
+
+    public function testUploadFile()
+    {
+        $fileContent = <<<TXT
+ABS uploader upload file
+TXT;
+        $fileName = 'abs-uploader-file.txt';
+        $sourceFile = $this->sourcePath . '/' . $fileName;
+        $this->fs->dumpFile($sourceFile, $fileContent);
+
+        $returnUrl = $this->uploader->upload($sourceFile);
+
+        $client = $this->getAbsClient();
+        $blob = $client->getBlob(UPLOADER_ABS_CONTAINER, $returnUrl);
+
+        $this->assertEquals('ABS uploader upload file', fread($blob->getContentStream(), 1000));
+        $this->assertEquals('text/plain', $blob->getProperties()->getContentType());
+    }
 }
