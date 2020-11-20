@@ -1,6 +1,6 @@
 # Debug Log Uploader
 
-[![Build Status](https://travis-ci.org/keboola/debug-log-uploader.svg?branch=master)](https://travis-ci.org/keboola/debug-log-uploader)
+[![Build Status](https://travis-ci.com/keboola/debug-log-uploader.svg?branch=master)](https://travis-ci.com/keboola/debug-log-uploader)
 [![Latest Stable Version](https://poser.pugx.org/keboola/debug-log-uploader/v/stable)](https://github.com/keboola/debug-log-uploader/releases)
 [![Total Downloads](https://poser.pugx.org/keboola/debug-log-uploader/downloads)](https://packagist.org/packages/keboola/debug-log-uploader)
 [![License](https://poser.pugx.org/keboola/debug-log-uploader/license)](https://github.com/keboola/debug-log-uploader/blob/master/LICENSE.md)
