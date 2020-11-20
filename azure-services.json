@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "variables": {
+    "storageAccountName": "[concat('loguploader', uniquestring(resourceGroup().id))]",
+    "containerName": "debug-files"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-06-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "accessTier": "Cool"
+      },
+      "resources": [
+        {
+          "type": "blobServices/containers",
+          "apiVersion": "2018-07-01",
+          "name": "[concat('default/', variables('containerName'))]",
+          "dependsOn": [
+            "[variables('storageAccountName')]"
+          ],
+          "properties": {
+            "publicAccess": "None"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "containerName": {
+      "type": "string",
+      "value": "[variables('containerName')]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "value": "[variables('storageAccountName')]"
+    }
+  }
+}
