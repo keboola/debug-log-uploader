@@ -16,6 +16,8 @@ UPLOADER_AWS_KEY=your_key
 UPLOADER_AWS_SECRET=your_secret
 UPLOADER_AWS_REGION=your_region
 UPLOADER_S3_BUCKET=your_s3_bucket
+UPLOADER_ABS_CONNECTION_STRING=
+UPLOADER_ABS_CONTAINER=
 ```
 
 Start container, install dependencies:
