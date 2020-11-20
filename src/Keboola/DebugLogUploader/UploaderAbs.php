@@ -52,7 +52,7 @@ class UploaderAbs implements UploaderInterface
      */
     public function upload($filePath, $contentType = 'text/plain')
     {
-        $fileName = trim($this->uploadPath, '/') . '/' .  $this->getFilePathAndUniquePrefix() . basename($filePath);
+        $fileName = $this->getUploadPath() .  $this->getFilePathAndUniquePrefix() . basename($filePath);
 
         $handle = fopen($filePath, 'rb');
         $counter = 1;
@@ -88,7 +88,7 @@ class UploaderAbs implements UploaderInterface
      */
     public function uploadString($name, $content, $contentType = 'text/plain')
     {
-        $fileName = trim($this->uploadPath, '/') . '/' .  $this->getFilePathAndUniquePrefix() . basename($name);
+        $fileName = $this->getUploadPath() . $this->getFilePathAndUniquePrefix() . basename($name);
 
         $options = new CreateBlockBlobOptions();
         $options->setContentDisposition(sprintf('attachment; filename=%s', $fileName));
@@ -111,6 +111,21 @@ class UploaderAbs implements UploaderInterface
     public function getFilePathAndUniquePrefix()
     {
         return date('Y/m/d/H/') . date('Y-m-d-H-i-s') . '-' . uniqid() . '-';
+    }
+
+    /**
+     * Gets upload path (with check for empty path)
+     * @return string
+     */
+    private function getUploadPath()
+    {
+        $uploadPath = trim($this->uploadPath, '/');
+
+        if (empty($uploadPath)) {
+            return '';
+        }
+
+        return $uploadPath . '/';
     }
 
     /**
