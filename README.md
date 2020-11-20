@@ -9,7 +9,7 @@ Simple package for uploading logs to S3 or local filesystem.
 
 ## Development
 
-Create `.env` file with your environment variables:
+Create `.env` file (from `.env.dist`) with your environment variables:
 
 ```
 UPLOADER_AWS_KEY=your_key
