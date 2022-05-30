@@ -62,8 +62,4 @@ docker-compose run --rm php sh -c 'composer install && ./tests.sh'
 
 ## License
 
-MIT. See license file.
-
-## License
-
 MIT licensed, see [LICENSE](./LICENSE) file.
