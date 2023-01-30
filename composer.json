@@ -12,6 +12,12 @@
         "s3",
         "abs"
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/keboola/zf1-json"
+        }
+    ],
     "require": {
         "php": "^7.4|^8",
         "aws/aws-sdk-php": "~3.0",

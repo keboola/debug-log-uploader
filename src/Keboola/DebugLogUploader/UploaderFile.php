@@ -42,7 +42,7 @@ class UploaderFile implements UploaderInterface
         $fileName = $this->path . '/' . $this->getFilePathAndUniquePrefix() . $name;
 
         if ($contentType === 'application/json') {
-            $content = Json::prettyPrint($content);
+            $content = \Zend_Json::prettyPrint($content);
         }
 
         (new Filesystem)->dumpFile($fileName, $content);
