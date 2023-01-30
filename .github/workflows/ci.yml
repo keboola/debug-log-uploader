@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       UPLOADER_ABS_CONNECTION_STRING: ${{ secrets.UPLOADER_ABS_CONNECTION_STRING }}
-      UPLOADER_ABS_CONTAINER: ${{ env.UPLOADER_ABS_CONTAINER }}
+      UPLOADER_ABS_CONTAINER: ${{ vars.UPLOADER_ABS_CONTAINER }}
       UPLOADER_AWS_SECRET: ${{ secrets.UPLOADER_AWS_SECRET }}
-      UPLOADER_AWS_KEY: ${{ env.UPLOADER_AWS_KEY }}
-      UPLOADER_AWS_REGION: ${{ env.UPLOADER_AWS_REGION }}
-      UPLOADER_S3_BUCKET: ${{ env.UPLOADER_S3_BUCKET }}
+      UPLOADER_AWS_KEY: ${{ vars.UPLOADER_AWS_KEY }}
+      UPLOADER_AWS_REGION: ${{ vars.UPLOADER_AWS_REGION }}
+      UPLOADER_S3_BUCKET: ${{ vars.UPLOADER_S3_BUCKET }}
     strategy:
       matrix:
         php-versions:
