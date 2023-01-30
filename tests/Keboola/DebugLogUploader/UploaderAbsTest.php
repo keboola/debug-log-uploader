@@ -5,15 +5,13 @@ namespace Keboola\DebugLogUploader;
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use Symfony\Component\Filesystem\Filesystem;
 
-class UploaderAbsTest extends \PHPUnit_Framework_TestCase
+class UploaderAbsTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var Filesystem */
-    private $fs;
+    private ?\Symfony\Component\Filesystem\Filesystem $fs = null;
 
-    /** @var string */
-    private $sourcePath = '/tmp/uploader-abs-test-source';
+    private string $sourcePath = '/tmp/uploader-abs-test-source';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fs = new Filesystem;
         $this->fs->remove($this->sourcePath);

@@ -4,26 +4,22 @@ namespace Keboola\DebugLogUploader;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class UploaderFileTest extends \PHPUnit_Framework_TestCase
+class UploaderFileTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var Filesystem */
-    private $fs;
+    private ?\Symfony\Component\Filesystem\Filesystem $fs = null;
 
-    /** @var UploaderFile */
-    private $uploader;
+    private ?\Keboola\DebugLogUploader\UploaderFile $uploader = null;
 
-    /** @var string */
-    private $sourcePath = '/tmp/uploader-file-test-source';
+    private string $sourcePath = '/tmp/uploader-file-test-source';
 
-    /** @var string */
-    private $destinationPath = '/tmp/uploader-file-test-dest';
+    private string $destinationPath = '/tmp/uploader-file-test-dest';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fs = new Filesystem;
         $this->fs->remove([$this->sourcePath, $this->destinationPath]);
         $this->fs->mkdir([$this->sourcePath, $this->destinationPath]);
-        
+
         $this->uploader = new UploaderFile($this->destinationPath);
 
         parent::setUp();

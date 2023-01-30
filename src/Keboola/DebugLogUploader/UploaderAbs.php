@@ -9,8 +9,8 @@ use MicrosoftAzure\Storage\Blob\Models\Block;
 
 class UploaderAbs implements UploaderInterface
 {
-    const PAD_LENGTH = 5;
-    const CHUNK_SIZE = 4 * 1024 * 1024;
+    public const PAD_LENGTH = 5;
+    public const CHUNK_SIZE = 4 * 1024 * 1024;
 
     /** @var string */
     private $urlPrefix;
@@ -21,8 +21,7 @@ class UploaderAbs implements UploaderInterface
     /** @var string */
     private $uploadPath;
 
-    /** @var BlobRestProxy */
-    private $absClient;
+    private \MicrosoftAzure\Storage\Blob\BlobRestProxy $absClient;
 
     public function __construct(BlobRestProxy $absClient, array $config)
     {

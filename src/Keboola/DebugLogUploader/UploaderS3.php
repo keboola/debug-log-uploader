@@ -12,8 +12,7 @@ class UploaderS3 implements UploaderInterface
     /** @var string */
     private $s3path;
 
-    /** @var S3Client */
-    private $s3client;
+    private \Aws\S3\S3Client $s3client;
 
     public function __construct(S3Client $s3Client, array $config)
     {
@@ -43,7 +42,7 @@ class UploaderS3 implements UploaderInterface
     public function upload($filePath, $contentType = 'text/plain')
     {
         $s3FileName = $this->getFilePathAndUniquePrefix() . basename($filePath);
-        list($bucket, $prefix) = explode('/', $this->s3path, 2);
+        [$bucket, $prefix] = explode('/', $this->s3path, 2);
 
         $this->s3client->putObject([
             'Bucket' => $bucket,
@@ -67,7 +66,7 @@ class UploaderS3 implements UploaderInterface
     public function uploadString($name, $content, $contentType = 'text/plain')
     {
         $s3FileName = $this->getFilePathAndUniquePrefix() . $name;
-        list($bucket, $prefix) = explode('/', $this->s3path, 2);
+        [$bucket, $prefix] = explode('/', $this->s3path, 2);
 
         $this->s3client->putObject([
             'Bucket' => $bucket,
