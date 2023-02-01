@@ -5,23 +5,20 @@ namespace Keboola\DebugLogUploader;
 use Aws\S3\S3Client;
 use Symfony\Component\Filesystem\Filesystem;
 
-class UploaderS3Test extends \PHPUnit_Framework_TestCase
+class UploaderS3Test extends \PHPUnit\Framework\TestCase
 {
-    /** @var Filesystem */
-    private $fs;
+    private ?\Symfony\Component\Filesystem\Filesystem $fs = null;
 
-    /** @var UploaderS3 */
-    private $uploader;
+    private ?\Keboola\DebugLogUploader\UploaderS3 $uploader = null;
 
-    /** @var string */
-    private $sourcePath = '/tmp/uploader-s3-test-source';
-    
-    protected function setUp()
+    private string $sourcePath = '/tmp/uploader-s3-test-source';
+
+    protected function setUp(): void
     {
         $this->fs = new Filesystem;
         $this->fs->remove($this->sourcePath);
         $this->fs->mkdir($this->sourcePath);
-        
+
         $this->uploader = new UploaderS3(
             $this->getS3client(),
             [
