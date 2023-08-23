@@ -16,6 +16,7 @@ jobs:
       UPLOADER_AWS_REGION: ${{ vars.UPLOADER_AWS_REGION }}
       UPLOADER_S3_BUCKET: ${{ vars.UPLOADER_S3_BUCKET }}
       UPLOADER_GCS_BUCKET: ${{ vars.UPLOADER_GCS_BUCKET }}
+      UPLOADER_GCS_BUCKET_KEY: ${{ secrets.UPLOADER_GCS_BUCKET_KEY }}
     strategy:
       matrix:
         php-versions:
