@@ -15,12 +15,12 @@ jobs:
       UPLOADER_AWS_KEY: ${{ vars.UPLOADER_AWS_KEY }}
       UPLOADER_AWS_REGION: ${{ vars.UPLOADER_AWS_REGION }}
       UPLOADER_S3_BUCKET: ${{ vars.UPLOADER_S3_BUCKET }}
+      UPLOADER_GCS_BUCKET: ${{ vars.UPLOADER_GCS_BUCKET }}
     strategy:
       matrix:
         php-versions:
-          - '7.4'
-          - '8.0'
           - '8.1'
+          - '8.2'
     steps:
       - uses: actions/checkout@v2
       - run: composer self-update
