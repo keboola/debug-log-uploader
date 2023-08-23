@@ -25,6 +25,24 @@ az deployment group create \
 ```
 Go to the Azure Portal - Storage Account - Access Keys and copy connection string.
 
+### Create GCP resources
+
+Using terraform:
+
+```
+cd provisioning/gcp
+terraform init
+terraform apply
+# set name_prefix (ci for github action)
+# set UPLOADER_GCS_BUCKET env
+# Go to the `https://console.cloud.google.com/iam-admin/serviceaccounts?project=gcp-dev-353411` (or your default project) and find your service account
+(`<name_prefix>-debug-log-uploader@...`)
+# In the table click on action and choose `Manage keys` (or click on service name and go to the detail and then choose `keys`)
+# Click on `ADD KEY` => `Create new key` and select key type `JSON` then click `CREATE`
+# convert key to string and save to `.env` file: `awk -v RS= '{$1=$1}1' <key_file>.json >> .env`
+# set content on the last line of `.env` as variable `UPLOADER_GCS_BUCKET_KEY`
+```
+
 ### Create .env file
 
 Create `.env` file (from `.env.dist`) with your environment variables:
