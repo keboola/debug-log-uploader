@@ -16,6 +16,8 @@ services:
       - UPLOADER_S3_BUCKET
       - UPLOADER_ABS_CONNECTION_STRING
       - UPLOADER_ABS_CONTAINER
+      - UPLOADER_GCS_BUCKET
+      - UPLOADER_GCS_BUCKET_KEY
     volumes:
       - ./:/code
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini

@@ -3,25 +3,17 @@
 namespace Keboola\DebugLogUploader;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Zend\Json\Json;
 
 class UploaderFile implements UploaderInterface
 {
-    /** @var string */
-    private $path;
-
-    public function __construct($path)
+    public function __construct(private readonly string $path)
     {
-        $this->path = $path;
     }
 
     /**
      * Uploads attachment (makes a copy of file)
-     * @param $filePath
-     * @param string $contentType
-     * @return string
      */
-    public function upload($filePath, $contentType = 'text/plain')
+    public function upload(string $filePath, string $contentType = 'text/plain'): string
     {
         $fileName = $this->path . '/' . $this->getFilePathAndUniquePrefix() . basename($filePath);
 
@@ -32,12 +24,8 @@ class UploaderFile implements UploaderInterface
 
     /**
      * Writes log message to file
-     * @param $name
-     * @param $content
-     * @param string $contentType
-     * @return string
      */
-    public function uploadString($name, $content, $contentType = 'text/plain')
+    public function uploadString(string $name, string $content, string $contentType = 'text/plain'): string
     {
         $fileName = $this->path . '/' . $this->getFilePathAndUniquePrefix() . $name;
 
@@ -48,9 +36,8 @@ class UploaderFile implements UploaderInterface
 
     /**
      * Gets file path and its prefix
-     * @return string
      */
-    public function getFilePathAndUniquePrefix()
+    public function getFilePathAndUniquePrefix(): string
     {
         return date('Y/m/d/H/') . date('Y-m-d-H-i-s') . '-' . uniqid() . '-';
     }
